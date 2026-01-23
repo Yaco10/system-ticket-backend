@@ -1,31 +1,27 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../models/user.model";
 import { assertAuthenticated } from "../types/authGuards";
+import { NotFoundError } from "../errors/NotFoundError";
+import { ForbiddenError } from "../errors/ForbbidenError";
 
 export async function requireAdmin(req: Request, res: Response, next: NextFunction){
-    assertAuthenticated(req)
-
     try{
+        assertAuthenticated(req)
+
         const user = await User.findById(req.userId)
         
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            throw new NotFoundError()
         }
 
         if (user.role !== "admin") {
-            return res.status(403).json({ message: "Forbidden" });
+            throw new ForbiddenError()
         }
 
-        req.admin = true;
-
         next()
-
     }
-    catch{
-        return res.status(404).json({message: "User not found"})
+    catch(err){
+        return next(err)
     }
-
-    
-
 
 }

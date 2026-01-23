@@ -1,5 +1,6 @@
 import { createApp } from "./app";
 import { connectDB } from "./config/db";
+import { PORT } from "./config/env";
 import express from "express";
 
 async function boostrap() {
@@ -7,9 +8,9 @@ async function boostrap() {
         await connectDB()
 
         const app = createApp()
-        const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+        
 
-        app.listen(port, () => { console.log(`Server corriendo en puerto ${port}`) })
+        app.listen(PORT, () => { console.log(`Server corriendo en puerto ${PORT}`) })
     }   
     catch (err){ 
         console.error("❌ Error al iniciar:", err); 
