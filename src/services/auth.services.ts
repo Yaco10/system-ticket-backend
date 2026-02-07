@@ -34,14 +34,18 @@ function signToken(userId: string) {
 }
 
 export async function register(input: RegisterInput) {
-  const email = normalizeEmail(input.email)
-  const password = input.password
 
-   if (!email || !password) {
-    const err = new Error("Email and password are required");
+    if (!input || typeof input.email !== "string" || typeof input.password !== "string") {
+ 
+console.log("🟦 INPUT EN SERVICE:", input);
+      const err = new Error("Email and password are required");
     (err as any).statusCode = 400;
     throw err;
   }
+
+
+  const email = normalizeEmail(input.email)
+  const password = input.password
 
     if (password.length < 6) {
     const err = new Error("Password must be at least 6 characters");

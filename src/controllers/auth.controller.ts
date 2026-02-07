@@ -10,6 +10,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
   }
 }
 
+
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
     const result = await authService.login(req.body);

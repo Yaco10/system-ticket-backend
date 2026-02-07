@@ -1,7 +1,8 @@
+import "dotenv/config";
 import { createApp } from "./app";
 import { connectDB } from "./config/db";
 import { PORT } from "./config/env";
-import express from "express";
+
 
 async function boostrap() {
     try{
